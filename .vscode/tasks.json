@@ -1,0 +1,64 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "inputs": [{
+    "id":"filename",
+    "default": "./Stamps/VA - Stamp.xsp",
+    "description": "the filename to run the program on.",
+    "type": "promptString"
+  }],
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "nim",
+      "args": ["c", "${file}"],
+      "problemMatcher":"$nim",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "build - release",
+      "type": "shell",
+      "command": "nim",
+      "args": ["c", "-d:danger", "-d:release", "-d:strip", "-d:opt:size", "${file}"],
+      "problemMatcher":"$nim",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      },
+      "group": "build" 
+    },
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "nim",
+      "args": ["c", "-r","${file}", "${input:filename}"],
+      "problemMatcher":"$nim",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": false
+      }
+    }
+    
+  ]
+}
